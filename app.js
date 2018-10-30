@@ -43,6 +43,10 @@ let Linky = mongoose.model('Linky', linkSchema);
 //bool to check if someone is logged in
 global.isSignedIn = false;
 
+app.listen(port, function(){
+  console.log('restful-blog-app server has started! on port 3001');
+});
+
 // RESTful Routes
 app.get('/', function(req, res){
   if (isSignedIn) {
@@ -154,8 +158,4 @@ app.delete('/links/:id', function(req, res){
       res.redirect('/links');
     }
   });
-});
-
-app.listen(port, function(){
-  console.log('restful-blog-app server has started! on port 3001');
 });
