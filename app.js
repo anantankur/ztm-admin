@@ -15,8 +15,10 @@ next();
 });
 
 // admin username and password
-let email = process.env.EMAIL;
-let pass = process.env.PASSWORD;
+const email = process.env.EMAIL;
+const pass = process.env.PASSWORD;
+
+const port = 3001 || process.env.PORT;
 
 //mlab
 let dbUrl = process.env.DB_URL;
@@ -130,7 +132,7 @@ app.get('/links/:id/edit', function(req, res){
 
 // Update Route
 app.put('/links/:id', function(req, res){
-  // req.body.blog.url = req.sanitize(req.body.blog.url);
+  req.body.blog.desc = req.sanitize(req.body.blog.desc);
   console.log(req.body.blog)
   console.log(req.params.id)
   Linky.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
@@ -154,6 +156,6 @@ app.delete('/links/:id', function(req, res){
   });
 });
 
-app.listen(3001, function(){
+app.listen(port, function(){
   console.log('restful-blog-app server has started! on port 3001');
 });
