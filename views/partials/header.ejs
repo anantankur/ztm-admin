@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Zreo-To-Mastery Resources</title>
+  <!-- tachyons -->
+  <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+  <!-- semantic ui -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css" />
+  <link rel="stylesheet" href="/stylesheets/app.css" />
+</head>
+
+<body>
+  <div class="ui secondary menu">
+    <div class="ui container">
+      <div class="header item"><i class="code"></i>Zero To Mastery</div>
+
+      <% if(isSignedIn){ %>
+        <a href="/links" class="item">Home</a>
+        <a href="/links/new" class="item">Add Resource</a>
+        <div class="right menu">
+          <span class="custom-dropdown">
+            <select id='nnnn'>
+              <option id='all'><a href='#'>All</a></option>
+              <option id='random'>Random</option>
+              <option id='general'>General</option>
+              <option id='webd'>Web Design</option>
+            </select>
+          </span>
+          <a href="/logout" class="ui item">
+            logout
+          </a>
+        </div>
+       <% } else{ %>  
+
+        <div class="right menu">
+          <a href="/admin" class="ui item">
+            admin
+          </a>
+        </div>
+         
+      <% } %>
+      
+    </div>
+  </div>
