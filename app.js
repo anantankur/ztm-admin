@@ -18,7 +18,7 @@ next();
 const email = process.env.EMAIL;
 const pass = process.env.PASSWORD;
 
-const port = 3001 || process.env.PORT;
+const port = process.env.PORT || 3001;
 
 //mlab
 let dbUrl = process.env.DB_URL;
@@ -43,12 +43,12 @@ let Linky = mongoose.model('Linky', linkSchema);
 //bool to check if someone is logged in
 global.isSignedIn = false;
 
-app.listen(port, function(){
+app.listen(port, (req, res) => {
   console.log('restful-blog-app server has started! on port 3001');
 });
 
 // RESTful Routes
-app.get('/', function(req, res){
+app.get('/', (req, res) => {
   if (isSignedIn) {
     res.redirect('/links');
   } else {
@@ -57,8 +57,8 @@ app.get('/', function(req, res){
 });
 
 // Index Route
-app.get('/links', function(req, res){
-  Linky.find({}, function(err, blogs){
+app.get('/links', (req, res) => {
+  Linky.find({}, (err, blogs) => {
     if(err){
       console.log(err);
       res.send('opps error')
@@ -69,7 +69,7 @@ app.get('/links', function(req, res){
 });
 
 // New Route
-app.get('/links/new', function(req, res){
+app.get('/links/new', (req, res) => {
   if (isSignedIn) {
     res.render('new');
   } else {
@@ -102,10 +102,10 @@ app.post('/signin', (req, res, next) => {
 });
 
 // Create Route
-app.post('/links', function(req, res){
+app.post('/links', (req, res) => {
   if (isSignedIn) {
     req.body.blog.desc = req.sanitize(req.body.blog.desc);
-    Linky.create(req.body.blog, function(err, newBlog){
+    Linky.create(req.body.blog, (err, newBlog) => {
     if(err){
       console.log(err);
       res.render('new');
@@ -120,8 +120,8 @@ app.post('/links', function(req, res){
 });
 
 // Edit Route
-app.get('/links/:id/edit', function(req, res){
-  Linky.findById(req.params.id, function(err, foundBlog){
+app.get('/links/:id/edit', (req, res) => {
+  Linky.findById(req.params.id, (err, foundBlog) => {
     if(err){
       res.redirect('/links');
     } else {
@@ -135,11 +135,11 @@ app.get('/links/:id/edit', function(req, res){
 });
 
 // Update Route
-app.put('/links/:id', function(req, res){
+app.put('/links/:id', (req, res) => {
   req.body.blog.desc = req.sanitize(req.body.blog.desc);
   console.log(req.body.blog)
   console.log(req.params.id)
-  Linky.findByIdAndUpdate(req.params.id, req.body.blog, function(err, updatedBlog){
+  Linky.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog) => {
     if(err){
       res.redirect('/links');
       console.log(err)
@@ -150,8 +150,8 @@ app.put('/links/:id', function(req, res){
 });
 
 // Delete Route
-app.delete('/links/:id', function(req, res){
-  Linky.findByIdAndRemove(req.params.id, function(err){
+app.delete('/links/:id', (req, res) => {
+  Linky.findByIdAndRemove(req.params.id, (err) => {
     if(err){
       res.redirect('/links');
     } else {
