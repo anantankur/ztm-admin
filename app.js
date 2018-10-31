@@ -128,17 +128,21 @@ app.post('/links', (req, res) => {
 
 // Edit Route
 app.get('/links/:id/edit', (req, res) => {
-  Linky.findById(req.params.id, (err, foundBlog) => {
-    if(err){
-      res.redirect('/links');
-    } else {
-      if (isSignedIn) {
-        res.render('edit', {blog: foundBlog, isSignedIn: isSignedIn});
-      } else {
-        res.render('notlogged', {isSignedIn: isSignedIn});
-      }
-    }
-  });
+	if (isSignedIn) {
+	  Linky.findById(req.params.id, (err, foundBlog) => {
+	    if(err){
+	      res.redirect('/links');
+	    } else {
+	      if (isSignedIn) {
+	        res.render('edit', {blog: foundBlog, isSignedIn: isSignedIn});
+	      } else {
+	        res.render('notlogged', {isSignedIn: isSignedIn});
+	      }
+	    }
+	  });
+	} else {
+		res.render('notlogged', {isSignedIn: isSignedIn});
+	}
 });
 
 // Update Route
