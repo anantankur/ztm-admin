@@ -16,10 +16,13 @@ next();
 
 //bool to check if someone is logged in
 let isSignedIn = false;
+//check if credentials are wrong
+let isWrong = false;
 
 // admin username and password
 const email = process.env.EMAIL;
 const pass = process.env.PASSWORD;
+
 
 const port = process.env.PORT || 3001;
 
@@ -80,7 +83,8 @@ app.get('/links/new', (req, res) => {
 
 //login route
 app.get('/admin', (req, res) => {
-	res.render('login', {isSignedIn: isSignedIn})
+  res.render('login', {isSignedIn: isSignedIn, isWrong: isWrong})
+  isWrong = false;
 });
 
 //logout route
@@ -93,11 +97,13 @@ app.get('/logout', (req, res) => {
 app.post('/signin', (req, res, next) => {
 
   if (req.body.email === email && req.body.password === pass) {
-    isSignedIn = true
+    isSignedIn = true;
+    isWrong = false;
     res.redirect('/links');
   } else {
-    isSignedIn = false
-    res.redirect('/links');
+    isSignedIn = false;
+    isWrong = true;
+    res.redirect('/admin');
   }
   
 });
