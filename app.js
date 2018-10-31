@@ -22,9 +22,9 @@ const port = process.env.PORT || 3001;
 
 //mlab
 let dbUrl = process.env.DB_URL;
+mongoose.connect(dbUrl, {useNewUrlParser: true});
 
 // mongoose.connect("mongodb://127.0.0.1:27017/test", {useNewUrlParser: true});
-mongoose.connect(dbUrl, {useNewUrlParser: true});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -41,7 +41,7 @@ var linkSchema = new mongoose.Schema({
 let Linky = mongoose.model('Linky', linkSchema);
 
 //bool to check if someone is logged in
-global.isSignedIn = false;
+let isSignedIn = false;
 
 app.listen(port, (req, res) => {
   console.log('restful-blog-app server has started! on port 3001');
@@ -63,7 +63,7 @@ app.get('/links', (req, res) => {
       console.log(err);
       res.send('opps error')
     } else {
-      res.render('index', {blogs: blogs});
+      res.render('index', {blogs: blogs, isSignedIn: isSignedIn});
     }
   });
 });
@@ -71,20 +71,20 @@ app.get('/links', (req, res) => {
 // New Route
 app.get('/links/new', (req, res) => {
   if (isSignedIn) {
-    res.render('new');
+    res.render('new', {isSignedIn: isSignedIn});
   } else {
-    res.render('notlogged');
+    res.render('notlogged', {isSignedIn: isSignedIn});
   }
 });
 
 //login route
 app.get('/admin', (req, res) => {
-	res.render('login')
+	res.render('login', {isSignedIn: isSignedIn})
 });
 
 //logout route
 app.get('/logout', (req, res) => {
-  global.isSignedIn = false;
+  isSignedIn = false;
   res.redirect('/links');
 })
 
@@ -92,10 +92,10 @@ app.get('/logout', (req, res) => {
 app.post('/signin', (req, res, next) => {
 
   if (req.body.email === email && req.body.password === pass) {
-    global.isSignedIn = true
+    isSignedIn = true
     res.redirect('/links');
   } else {
-    global.isSignedIn = false
+    isSignedIn = false
     res.redirect('/links');
   }
   
@@ -114,7 +114,7 @@ app.post('/links', (req, res) => {
     }
   });
   } else {
-    res.render('notlogged');
+    res.render('notlogged', {isSignedIn: isSignedIn});
   }
   
 });
@@ -126,9 +126,9 @@ app.get('/links/:id/edit', (req, res) => {
       res.redirect('/links');
     } else {
       if (isSignedIn) {
-        res.render('edit', {blog: foundBlog});
+        res.render('edit', {blog: foundBlog, isSignedIn: isSignedIn});
       } else {
-        res.render('notlogged');
+        res.render('notlogged', {isSignedIn: isSignedIn});
       }
     }
   });
