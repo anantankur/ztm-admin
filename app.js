@@ -18,18 +18,16 @@ next();
 let isSignedIn = false;
 
 // admin username and password
-// const email = process.env.EMAIL;
-// const pass = process.env.PASSWORD;
-const email = 'a@a.a';
-const pass = 'pass';
+const email = process.env.EMAIL;
+const pass = process.env.PASSWORD;
 
 const port = process.env.PORT || 3001;
 
 //mlab
-// let dbUrl = process.env.DB_URL;
-// mongoose.connect(dbUrl, {useNewUrlParser: true});
+let dbUrl = process.env.DB_URL;
+mongoose.connect(dbUrl, {useNewUrlParser: true});
 
-mongoose.connect("mongodb://127.0.0.1:27017/test", {useNewUrlParser: true});
+// mongoose.connect("mongodb://127.0.0.1:27017/test", {useNewUrlParser: true});
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
