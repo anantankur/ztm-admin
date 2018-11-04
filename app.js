@@ -12,24 +12,25 @@ var express = require('express'),
 //passportjs below
 passport.use(new Strategy(
 	function(username, password, cb) {
-	  db.users.findByUsername(username, function(err, user) {
-	    if (err) { return cb(err); }
-	    if (!user) { return cb(null, false); }
-	    if (user.password != password) { return cb(null, false); }
-	    return cb(null, user);
-	  });
-	}));
+	    db.users.findByUsername(username, function(err, user) {
+	        if (err) { return cb(err); }
+	        if (!user) { return cb(null, false); }
+	        if (user.password != password) { return cb(null, false); }
+	        return cb(null, user);
+	    });
+	}
+));
 
 
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
+    cb(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  db.users.findById(id, function (err, user) {
-    done(err, user);
-  });
+    db.users.findById(id, function (err, user) {
+        done(err, user);
+    });
 });
 
 //bool to check if someone is logged in
@@ -64,15 +65,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var linkSchema = new mongoose.Schema({
-  url_text: String,
-  category: String,
-  url: String,
-  desc: String,
+    url_text: String,
+    category: String,
+    url: String,
+    desc: String,
 });
 let Linky = mongoose.model('Linky', linkSchema);
 
 app.listen(port, (req, res) => {
-  console.log('restful-blog-app server has started! on port 3001');
+    console.log('restful-blog-app server has started! on port 3001');
 });
 
 // RESTful Routes
@@ -83,25 +84,21 @@ app.get('/', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res
 
 // Index Route
 app.get('/links', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
-  Linky.find({}, (err, blogs) => {
-	if(err){
-	  console.log(err);
-	  res.send('opps error')
-	} else {
-	  res.render('index', {blogs: blogs});
-	}
-  });
+    Linky.find({}, (err, blogs) => {
+	    if(err){
+	        console.log(err);
+	        res.send('opps error')
+	    } else {
+	        res.render('index', {blogs: blogs});
+	    }
+    });
 });
 
-// New Route//////////////////////////////////////auth////////////////////////////////
 app.get('/links/new', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
 
 	res.render('new');
 
-	// res.render('notlogged');
-
 });
-////////////////////////////////////////////////
 
 //login route
 app.get('/admin', (req, res) => {
@@ -123,60 +120,55 @@ app.post('/admin', passport.authenticate('local', { failureRedirect: '/admin' })
   
 });
 
-// Create Route //////////////////////////////////////////auth//////////////////////////////////////
+// Create Route
 app.post('/links', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
 
 	req.body.blog.desc = req.sanitize(req.body.blog.desc);
 	Linky.create(req.body.blog, (err, newBlog) => {
 		if(err){
-		  console.log(err);
-		  res.render('new');
+		    console.log(err);
+		    res.render('new');
 		} else {
-		  res.redirect('/links');
+		    res.redirect('/links');
 		}
 	  });
  
 });
-//////////////////////////////////////////////////////////////////////////
 
-// Edit Route//////////////////////auth///////////////
+// Edit Route
 app.get('/links/:id/edit', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
 
-	  Linky.findById(req.params.id, (err, foundBlog) => {
-		if(err){
-		  res.redirect('/links');
-		} else {
-
-			res.render('edit', {blog: foundBlog});
-
-			// res.render('notlogged');
-
-		}
-	  });
+	    Linky.findById(req.params.id, (err, foundBlog) => {
+		    if(err){
+		        res.redirect('/links');
+		    } else {
+			    res.render('edit', {blog: foundBlog});
+		    }
+	    });
 
 });
-/////////////////////////////////////////
+
 
 // Update Route
 app.put('/links/:id', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
-  req.body.blog.desc = req.sanitize(req.body.blog.desc);
-  Linky.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog) => {
-	if(err){
-	  res.redirect('/links');
-	  console.log(err)
-	} else {
-	  res.redirect('/links');
-	}
-  });
+    req.body.blog.desc = req.sanitize(req.body.blog.desc);
+    Linky.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog) => {
+	    if(err){
+	        res.redirect('/links');
+	        console.log(err)
+	    } else {
+	        res.redirect('/links');
+	    }
+    });
 });
 
 // Delete Route
 app.delete('/links/:id', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
-  Linky.findByIdAndRemove(req.params.id, (err) => {
-	if(err){
-	  res.redirect('/links');
-	} else {
-	  res.redirect('/links');
-	}
-  });
+    Linky.findByIdAndRemove(req.params.id, (err) => {
+	    if(err){
+	        res.redirect('/links');
+	    } else {
+	        res.redirect('/links');
+	    }
+    });
 });
