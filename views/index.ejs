@@ -1,5 +1,34 @@
 <% include ./partials/header %>
 
+
+
+  <div class="ui secondary menu">
+    <div class="ui container">
+      <div class="header item"><i class="code"></i>Zero To Mastery</div>
+
+        <a href="/links" class="item">Home</a>
+        <a href="/links/new" class="item">Add Resource</a>
+        <div class="right menu">
+          <span class="custom-dropdown">
+            <select id='nnnn'>
+              <option id='all'><a href='#'>All</a></option>
+              <option id='random'>Random</option>
+              <option id='general'>General</option>
+              <option id='webd'>Web Design</option>
+            </select>
+          </span>
+          <a href="/logout" class="ui item">
+            logout
+          </a>
+        </div>
+      
+    </div>
+  </div>
+
+
+
+
+
 <div class="ui main text container">
   <div class="ui huge header">Zero-To-Mastery Resources</div>
   <div class="ui top attached segment">
@@ -14,12 +43,10 @@
                   <p>URL Description: -> <%- el.desc.substring(0, 100) %>...</p>
               </div>
               <div class="extra">
-                  <% if(isSignedIn){ %>
                      <a class="ui orange basic button" href="/links/<%= el._id %>/edit">Edit</a>
                   <form id="delete" action="/links/<%= el._id %>?_method=DELETE" method="POST">
                     <button class="ui red basic button">Delete</button>
                   </form>
-                 <% } %>
               </div>
           </div>
         </div>
