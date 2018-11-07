@@ -1,7 +1,6 @@
 <% include ./partials/header %>
 
-
-
+<% /* navbar specifically for index route starts */ %>
   <div class="ui secondary menu">
     <div class="ui container">
       <div class="header item"><i class="code"></i>Zero To Mastery</div>
@@ -9,14 +8,15 @@
         <a href="/links" class="item">Home</a>
         <a href="/links/new" class="item">Add Resource</a>
         <div class="right menu">
-          <span class="custom-dropdown">
-            <select id='nnnn'>
-              <option id='all'><a href='#'>All</a></option>
-              <option id='random'>Random</option>
-              <option id='general'>General</option>
-              <option id='webd'>Web Design</option>
-            </select>
-          </span>
+          <div class="dropdown">
+            <button class="dropbtn">Category</button>
+            <div class="dropdown-content">
+              <a href="/links/">All</a>
+              <a href="/links/filter/?category=general">General</a>
+              <a href="/links/filter/?category=random">Random</a>
+              <a href="/links/filter/?category=webd">Web Design</a>
+            </div>
+          </div>
           <a href="/logout" class="ui item">
             logout
           </a>
@@ -24,8 +24,7 @@
       
     </div>
   </div>
-
-
+<% /* navbar ends */ %>
 
 
 

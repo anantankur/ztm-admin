@@ -1,32 +1,6 @@
   <% include ./partials/header %>
 
-
-
-  <div class="ui secondary menu">
-    <div class="ui container">
-      <div class="header item"><i class="code"></i>Zero To Mastery</div>
-
-        <a href="/links" class="item">Home</a>
-        <a href="/links/new" class="item">Add Resource</a>
-        <div class="right menu">
-          <span class="custom-dropdown">
-            <select id='nnnn'>
-              <option id='all'><a href='#'>All</a></option>
-              <option id='random'>Random</option>
-              <option id='general'>General</option>
-              <option id='webd'>Web Design</option>
-            </select>
-          </span>
-          <a href="/logout" class="ui item">
-            logout
-          </a>
-        </div>
-      
-    </div>
-  </div>
-
-
-
+  <% include ./partials/navbar %>
 
   <div class="ui main text container segment">
     <div class="ui huge header">Edit</div>
@@ -39,8 +13,8 @@
         <label>Category</label>
         <span class="custom-dropdown">
           <select name="blog[category]" value="<%= blog.category %>" id='nnnn'>
-              <option value='random'>Random</option>
               <option value='general'>General</option>
+              <option value='random'>Random</option>
               <option value='webd'>Web Design</option>
           </select>
         </span>

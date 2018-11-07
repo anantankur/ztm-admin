@@ -6,7 +6,8 @@
   display: inline;
 }
 
-/* Custom dropdown */
+/* Custom dropdown - edit/new res */
+
 .custom-dropdown {
   position: relative;
   display: inline-block;
@@ -25,7 +26,7 @@
   border-radius: 3px;
   text-indent: 0.01px;
   text-overflow: '';
-  -webkit-appearance: button; /* hide default arrow in chrome OSX */
+  -webkit-appearance: button;
 }
 
 .custom-dropdown::before,
@@ -35,7 +36,7 @@
   pointer-events: none;
 }
 
-.custom-dropdown::after { /*  Custom dropdown arrow */
+.custom-dropdown::after {
   content: "\25BC";
   height: 1em;
   font-size: .625em;
@@ -45,7 +46,7 @@
   margin-top: -.5em;
 }
 
-.custom-dropdown::before { /*  Custom dropdown arrow cover */
+.custom-dropdown::before {
   width: 2em;
   right: 0;
   top: 0;
@@ -59,4 +60,55 @@
 
 .custom-dropdown::after {
   color: rgba(0,0,0,.4);
+}
+
+
+
+
+
+/*custom dropdown - filter res*/
+.dropbtn {
+    background-color: #dc3545;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #ffc5d6;
 }

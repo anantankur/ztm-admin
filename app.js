@@ -33,8 +33,6 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-//bool to check if someone is logged in
-let isSignedIn = false;
 //check if credentials are wrong
 let isWrong = false;
 //port number
@@ -42,11 +40,15 @@ const port = process.env.PORT || 3001;
 //express-session ss
 const secret = process.env.SECRET;
 
+//express-session ss local
+// const secret = 'random Monster';
+
+
 //mlab
 let dbUrl = process.env.DB_URL;
 mongoose.connect(dbUrl, {useNewUrlParser: true});
 
-//for local setup
+// for local setup
 // mongoose.connect("mongodb://127.0.0.1:27017/test", {useNewUrlParser: true});
 
 app.set('view engine', 'ejs');
@@ -85,6 +87,19 @@ app.get('/', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res
 // Index Route
 app.get('/links', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
     Linky.find({}, (err, blogs) => {
+	    if(err){
+	        console.log(err);
+	        res.send('opps error')
+	    } else {
+	        res.render('index', {blogs: blogs});
+	    }
+    });
+});
+
+// FILTERED Index Route
+app.get('/links/filter', require('connect-ensure-login').ensureLoggedIn('/admin'), (req, res) => {
+	console.log(req.query.category)
+    Linky.find({category: req.query.category}, (err, blogs) => {
 	    if(err){
 	        console.log(err);
 	        res.send('opps error')
