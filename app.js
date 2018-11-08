@@ -41,7 +41,7 @@ const port = process.env.PORT || 3001;
 const secret = process.env.SECRET;
 
 //express-session ss local
-// const secret = 'random Monster';
+const secret = 'random Monster';
 
 
 //mlab
