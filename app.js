@@ -75,7 +75,7 @@ var linkSchema = new mongoose.Schema({
 let Linky = mongoose.model('Linky', linkSchema);
 
 app.listen(port, (req, res) => {
-    console.log('restful-blog-app server has started! on port 3001');
+    console.log('running on port ' + port);
 });
 
 // RESTful Routes
